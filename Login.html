@@ -1,0 +1,55 @@
+<!doctype html>
+<!--Mention the module name to <html> -->
+<html ng-app="bookApp">
+    <head>        
+    <title>Angular Assignment</title>
+<style type="text/css"> 
+@import "styles/style.css";
+        </style>
+        <script src="lib/Angular/angular.js"></script>
+        <script src="lib/Angular/angular-route.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/app.js"></script>
+    </head>
+    <body>
+    <center>
+        <!--include header.html -->
+        <div ng-include="'Header.html'"></div>
+    </center>    
+        
+    <!-- Add the required controller to this div.
+        Associate the models for username and password.
+    -->
+        <div  align="center" ng-controller="LoginCtrl">
+       <h2>
+            Login
+        </h2>
+
+            <div class="LoginFormDiv">
+                <table border="0">
+                    <tr>
+                        <td> Username </td>
+                        <td>: <input ng-model="username" class="input" placeholder="Enter
+ Username"/></td>
+                    </tr>
+                    <tr>
+                        <td> Password</td>
+                        <td>: <input ng-model="password" class="input" placeholder="Enter
+ Password"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <!-- On click of the button, call validate(user)  method declared in controller-->
+                            <input type="submit" class="button" value="Login" ng-click="validate()"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+    </div>
+   <!-- include footer.html -->
+    <center>
+        <div ng-include="'Footer.html'"></div>
+    </center>
+</body>
+</html>

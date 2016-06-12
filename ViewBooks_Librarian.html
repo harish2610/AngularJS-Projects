@@ -1,0 +1,84 @@
+<!doctype html>
+
+<!--Mention the module name to <html> -->
+<html ng-app="bookApp">
+<head>
+    <title>Angular Assignment</title>
+    <style type="text/css">
+        @import "styles/style.css";
+    </style>
+    <script src="lib/Angular/angular.js"></script>
+    <script src="lib/Angular/angular-route.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/customfilters.js"></script>
+</head>
+<body>
+<center>
+
+    <div ng-include="'Header.html'"></div>
+
+</center>
+<!-- Add the required controller to this div.
+-->
+
+<div  align="center" ng-controller="BookListCtrl_Librarian">
+    <h2 class="title" style="color: red;""font-style: italics;">
+    View Books
+    </h2>
+
+    <div class="span2">
+        <!--Sidebar content-->
+        Search: <input class="input" type="text" ng-model="query" placeholder="Search">
+        Sort Books:<select ng-model="sort" ng-options="option for option in options" class="select">
+        <option value="">-- No Sort --</option>
+    </select>
+
+    </div>
+    <div>
+
+        <table border="1">
+            <th>S.No.</th>
+            <th>Image</th>
+            <th>Details</th>
+
+            <tr ng-repeat="book in books | filter:query| orderBy:sort">
+
+                <td>{{ $index + 1 }}</td>
+                <td>
+                    <img ng-src={{book.imgUrl}} width="50%">
+                </td>
+                <td>
+                    <div ng-model="issued[book.bookId]" ng-init="issued[book.bookId]=false">
+                        <ul style="list-style-type:none">
+                            <li>Book Id :  {{book.bookId}}</li>
+                            <li>Book Title :  {{book.bookTitle}}</li>
+                            <li>Book Topic :  {{book.topic}}</li>
+                            <li>Book Author :  {{book.author}}</li>
+                            <li>Book Cost :  {{book.cost | currency:"&#8377;"}}</li>
+
+                            <li>Issued : {{issued[book.bookId]}}</li>
+                            <li>
+                                <button id="issuebutton" ng-disabled="issued[book.bookId]"  type="submit"  ng-click="visibility(book.bookId)">Issue Book</button>
+                                <button id="returnbutton" ng-disabled="!issued[book.bookId]" type="submit"  ng-click="visibility(book.bookId)">Return book</button>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </td>
+
+            </tr>
+
+            <tr class="LoginFormDiv">
+
+
+            </tr>
+        </table>
+    </div>
+    <br>
+
+</div>
+<div ng-include="'Footer.html'"></div>
+</body>
+</html>
