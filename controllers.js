@@ -15,48 +15,50 @@
  */
 
 var Controllers = angular.module('Controllers', ['ngRoute']);
-Controllers.controller('LoginCtrl', ['$scope','$location', '$http', '$rootScope',
-    function ($scope,$location, $http, $rootScope) {
-        alert("I am in LoginCtrl")
+Controllers.controller('LoginCtrl', ['$scope','$location', '$http',
+    function ($scope,$location, $http) {
+
         $scope.validate=function()
         {
-            alert("I am in validate function")
             $http.get('data/roles.json').success(function(data) {
                 $scope.roles = data;
             });
             var count=0;
+            alert($scope.username+"LoginCtrl"+$scope.password);
             angular.forEach($scope.roles, function(role) {
-                if($scope.username==role.username && $scope.password==role.password) {
+                alert($scope.username+"I am in forEach loop");
+                if($scope.username===role.username && $scope.password===role.password) {
+                    alert(role.role+"LoginCtrl1"+count);
                     alert("login successful");
-                    count=count+1;
-                    if($scope.roles=="student") {
-                        $location.path("/home/student");
+                    count = count + 1;
+
+                    if(role.role==="student") {
+                        alert(role.role+"LoginCtrl1"+count);
+                        $location.path('/home/student');
                     }
                     else {
-                        $location.path("/home/librarian");
+                        $location.path('/home/librarian');
                     }
                 }
-
-                else if(count!=1)
-                {
-                    alert("Please provide valid login credentials");
-                    $location.path( "/main" )
-                }
-
             });
-
+            if(count!=1)
+            {
+                alert("Please provide valid login credentials");
+                $location.path( "/main" )
+            }
 
         }
 
     }]);
 
-Controllers.controller('BookListCtrl_Student', ['$scope','$http','BookData','$rootScope',
+Controllers.controller('BookListCtrl_Student', ['$scope','$http','$rootScope',
     function ($scope, $http) {
         $http.get('data/books.json').success(function(data) {
            // $rootScope.books.json = BookData.getData();
             $scope.books = data;
         });
-        //$scope.bookLists = ['All Books', 'Available Books'];
+        $scope.bookLists = ['All Books', 'Available Books'];
+        $scope.selection = $scope.bookLists[0];
     }]);
 
 /*
@@ -68,7 +70,7 @@ Controllers.controller('BookListCtrl_Student', ['$scope','$http','BookData','$ro
 Controllers.controller('BookListCtrl_Librarian', ['$scope','$http','$rootScope','BookData',
     function ($scope, $http , $rootScope , BookData) {
         $http.get('data/books.json').success(function(data) {
-        console.log("Gollu1"+$rootScope.books)
+            alert("I am in BookListCtrl_Librarian")
         if($rootScope.books=='undefined'){
             $rootScope.books = BookData.getData();
         }
